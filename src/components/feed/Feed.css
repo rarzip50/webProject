@@ -1,0 +1,11 @@
+.feed {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+.feed > .posts {
+  margin-top: 10px;
+  color: coral;
+}
