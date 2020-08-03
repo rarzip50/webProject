@@ -15,20 +15,6 @@ class Feed extends React.Component {
     this.state = {
       user: this.props.user,
       content: null,
-      users: [
-        {
-          userName: "rarzip50",
-          header: "good night",
-          photos: [],
-          content: "good night sapir",
-        },
-        {
-          userName: "sapiry",
-          header: "good night",
-          photos: [],
-          content: "good night ofir",
-        },
-      ],
     };
     this.listRef = React.createRef();
     this.postContent = this.postContent.bind(this);
@@ -37,13 +23,16 @@ class Feed extends React.Component {
   postContent() {
     const user = this.state.user;
     const content = document.getElementsByName("postContent")[0].value;
+    const exposure = document.getElementsByName("exposure")[0];
+    const selectedExposure = exposure.options[exposure.selectedIndex].text;
+
     let currentTime = moment(Date.now()).format("HH:mm");
     const data = {
       content: content,
       userName: user,
       time: currentTime,
+      exposure: selectedExposure,
     };
-    console.log("called");
     if (content !== "")
       axios
         .post(globals.SERVER_URL + "/saveNewPost", { data: data })
@@ -54,6 +43,9 @@ class Feed extends React.Component {
               writer={data.userName}
               time={data.time}
               content={data.content}
+              exposure={exposure}
+              user={this.state.user}
+              postId={res.data.postId}
             />
           );
           this.setState({ content: posts, uu: "dd" });
@@ -74,6 +66,9 @@ class Feed extends React.Component {
                 name={postContent.writer}
                 time={postContent.time}
                 content={postContent.content}
+                exposure={postContent.exposure}
+                user={this.state.user}
+                postId={postContent.postId}
               />
             );
           }),

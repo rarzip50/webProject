@@ -42,6 +42,10 @@ app.get("/postsForMe", (req, res) => {
 });
 
 app.post("/saveNewPost", (req, res) => {
-  utils.saveNewPost(req.body.data);
-  res.send("yes");
+  const postId = utils.saveNewPost(req.body.data);
+  res.send({ postId: postId });
+});
+
+app.post("/editExposure", (req, res) => {
+  utils.editPostExposure(req.body.data);
 });
