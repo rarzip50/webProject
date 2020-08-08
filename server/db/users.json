@@ -2,7 +2,7 @@
   {
     "userName": "rarzip50",
     "password": "123456",
-    "connected": false,
+    "connected": true,
     "friends": ["rarzip20"]
   },
   {
