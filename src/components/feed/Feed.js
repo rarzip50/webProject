@@ -14,7 +14,7 @@ class Feed extends React.Component {
 
     this.state = {
       user: this.props.user,
-      content: null,
+      content: [],
     };
     this.listRef = React.createRef();
     this.postContent = this.postContent.bind(this);
@@ -38,17 +38,15 @@ class Feed extends React.Component {
         .post(globals.SERVER_URL + "/saveNewPost", { data: data })
         .then((res) => {
           let posts = this.state.content;
-          posts.push(
-            <Post
-              writer={data.userName}
-              time={data.time}
-              content={data.content}
-              exposure={exposure}
-              user={this.state.user}
-              postId={res.data.postId}
-            />
-          );
-          this.setState({ content: posts, uu: "dd" });
+          posts.push({
+            writer: data.userName,
+            time: data.time,
+            content: data.content,
+            exposure: data.exposure,
+            postId: res.data.postId,
+            user: this.state.user,
+          });
+          this.setState({ content: posts });
         });
   }
 
@@ -57,22 +55,9 @@ class Feed extends React.Component {
       user: this.state.user,
     });
     t.then((res) => {
-      console.log(res);
       if (res.length !== 0) {
-        this.setState({
-          content: res.map((postContent, index) => {
-            return (
-              <Post
-                name={postContent.writer}
-                time={postContent.time}
-                content={postContent.content}
-                exposure={postContent.exposure}
-                user={this.state.user}
-                postId={postContent.postId}
-              />
-            );
-          }),
-        });
+        this.setState({ content: res });
+        console.log(res);
       } else {
       }
     });
@@ -84,7 +69,18 @@ class Feed extends React.Component {
         <MenuBar user={this.state.user} />
         <div className="feed">
           <PostUpload userName={this.state.user} onUpload={this.postContent} />
-          {this.state.content}
+          {this.state.content.map((postContent, index) => {
+            return (
+              <Post
+                name={postContent.writer}
+                time={postContent.time}
+                content={postContent.content}
+                exposure={postContent.exposure}
+                user={this.state.user}
+                postId={postContent.postId}
+              />
+            );
+          })}
         </div>
       </>
     );

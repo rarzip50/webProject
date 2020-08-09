@@ -31,6 +31,11 @@ class MenuBar extends React.Component {
     );
   };
 
+  search() {
+    let searchText = document.getElementsByName("searchh")[0].value;
+    console.log(searchText);
+  }
+
   setOptions = () => {};
 
   render() {
@@ -42,6 +47,15 @@ class MenuBar extends React.Component {
           {this.state.connectedUsers}
         </select>
         <div className="header">{this.state.user}</div>
+        <label htmlFor="uname">
+          <b>Username</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        ></input>
       </div>
     );
   }

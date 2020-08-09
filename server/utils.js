@@ -28,7 +28,11 @@ exports.getPostsForMe = function (userName) {
   let postsForMe = [];
 
   for (let i = 0; i < postsDB.length; i++) {
-    if (myFriends.includes(postsDB[i].writer)) postsForMe.push(postsDB[i]);
+    if (myFriends.includes(postsDB[i].writer)) {
+      if (postsDB[i].writer !== user && postsDB[i].exposure === "private")
+        continue;
+      else postsForMe.push(postsDB[i]);
+    }
   }
   return postsForMe;
 };

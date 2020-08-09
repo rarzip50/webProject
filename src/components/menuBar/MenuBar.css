@@ -1,19 +1,25 @@
-.menuBar{
-    height: 50px;
-    background-color: #20232a;
-    color: #ffffff;
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    top: 0;
-    left: 0;
+.menuBar {
+  height: 50px;
+  background-color: #20232a;
+  color: #ffffff;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
-.menuBar > .header{
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 40px;
-    display: inline-block;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 800;
+.menuBar > .header {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 40px;
+  display: inline-block;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+}
+
+.search {
+  margin-left: 400px;
+  width: 400px;
+  height: 40px;
 }
