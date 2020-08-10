@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "userName": "rarzip50",
@@ -18,3 +19,6 @@
     "friends": ["rarzip50", "rarzip20"]
   }
 ]
+=======
+[{"userName":"rarzip50","password":"123456","connected":true,"friends":["rarzip20"]},{"userName":"rarzip20","password":"123456","connected":false,"friends":["rarzip50"]},{"userName":"joe","password":"123456","connected":false,"friends":["rarzip50","rarzip20"]}]
+>>>>>>> a5a250ce3d9e6962ea8d43f336e3124d2a23727c

@@ -14,21 +14,7 @@ class Feed extends React.Component {
 
     this.state = {
       user: this.props.user,
-      content: null,
-      users: [
-        {
-          userName: "rarzip50",
-          header: "good night",
-          photos: [],
-          content: "good night sapir",
-        },
-        {
-          userName: "sapiry",
-          header: "good night",
-          photos: [],
-          content: "good night ofir",
-        },
-      ],
+      content: [],
     };
     this.listRef = React.createRef();
     this.postContent = this.postContent.bind(this);
@@ -37,26 +23,30 @@ class Feed extends React.Component {
   postContent() {
     const user = this.state.user;
     const content = document.getElementsByName("postContent")[0].value;
+    const exposure = document.getElementsByName("exposure")[0];
+    const selectedExposure = exposure.options[exposure.selectedIndex].text;
+
     let currentTime = moment(Date.now()).format("HH:mm");
     const data = {
       content: content,
       userName: user,
       time: currentTime,
+      exposure: selectedExposure,
     };
-    console.log("called");
     if (content !== "")
       axios
         .post(globals.SERVER_URL + "/saveNewPost", { data: data })
         .then((res) => {
           let posts = this.state.content;
-          posts.push(
-            <Post
-              writer={data.userName}
-              time={data.time}
-              content={data.content}
-            />
-          );
-          this.setState({ content: posts, uu: "dd" });
+          posts.push({
+            writer: data.userName,
+            time: data.time,
+            content: data.content,
+            exposure: data.exposure,
+            postId: res.data.postId,
+            user: this.state.user,
+          });
+          this.setState({ content: posts });
         });
   }
 
@@ -65,19 +55,9 @@ class Feed extends React.Component {
       user: this.state.user,
     });
     t.then((res) => {
-      console.log(res);
       if (res.length !== 0) {
-        this.setState({
-          content: res.map((postContent, index) => {
-            return (
-              <Post
-                name={postContent.writer}
-                time={postContent.time}
-                content={postContent.content}
-              />
-            );
-          }),
-        });
+        this.setState({ content: res });
+        console.log(res);
       } else {
       }
     });
@@ -89,7 +69,18 @@ class Feed extends React.Component {
         <MenuBar user={this.state.user} />
         <div className="feed">
           <PostUpload userName={this.state.user} onUpload={this.postContent} />
-          {this.state.content}
+          {this.state.content.map((postContent, index) => {
+            return (
+              <Post
+                name={postContent.writer}
+                time={postContent.time}
+                content={postContent.content}
+                exposure={postContent.exposure}
+                user={this.state.user}
+                postId={postContent.postId}
+              />
+            );
+          })}
         </div>
       </>
     );
