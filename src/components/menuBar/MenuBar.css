@@ -18,8 +18,29 @@
   font-weight: 800;
 }
 
-.search {
+.searchDiv {
   margin-left: 400px;
+  margin-top: 0;
   width: 400px;
   height: 40px;
+}
+
+.searchBar{
+  margin-top: 0;
+  width: 400px;
+  height: 40px;
+}
+
+.suggestions{
+  margin-top: 0;
+  width: 100%;
+  height: 40px;
+}
+
+.suggestion{
+  border: 1px solid black;
+  margin-top: 0;
+  width: 100%;
+  height: 40px;
+  color: black;
 }

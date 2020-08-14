@@ -10,6 +10,8 @@ class MenuBar extends React.Component {
     this.state = {
       connectedUsers: null,
       user: this.props.user,
+      suggestions: [{text: "yes"}, {text: "yes"}],
+      displaySuggestions: "none"
     };
     this.listRef = React.createRef();
   }
@@ -31,9 +33,9 @@ class MenuBar extends React.Component {
     );
   };
 
-  search() {
-    let searchText = document.getElementsByName("searchh")[0].value;
-    console.log(searchText);
+  search(e) {
+    const searchText = e.currentTarget.value;
+    
   }
 
   setOptions = () => {};
@@ -47,15 +49,29 @@ class MenuBar extends React.Component {
           {this.state.connectedUsers}
         </select>
         <div className="header">{this.state.user}</div>
-        <label htmlFor="uname">
-          <b>Username</b>
-        </label>
-        <input
-          type="text"
-          placeholder="Enter Username"
-          name="uname"
-          required
-        ></input>
+        <div className="searchDiv">
+          <input
+            type="text"
+            placeholder="Enter Username"
+            name="search"
+            className= "searchBar"
+            onChange={this.search}
+          >
+          </input>
+          <div className="suggestions">
+          {this.state.suggestions.map((suggestion) => {
+            return (
+              <div
+                className="suggestion"
+              >
+                {suggestion.text}
+              </div>
+            );
+          })}
+
+          </div>
+        </div>
+        
       </div>
     );
   }
