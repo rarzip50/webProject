@@ -10,6 +10,7 @@
 }
 
 .menuBar > .header {
+  top: 0;
   margin-top: 10px;
   margin-left: 30px;
   margin-right: 40px;
@@ -19,25 +20,27 @@
 }
 
 .searchDiv {
+  display: inline-block;
   margin-left: 400px;
   margin-top: 0;
   width: 400px;
   height: 40px;
 }
 
-.searchBar{
+.searchBar {
   margin-top: 0;
   width: 400px;
   height: 40px;
 }
 
-.suggestions{
+.suggestions {
   margin-top: 0;
-  width: 100%;
+  margin-left: 610px;
+  width: 400px;
   height: 40px;
 }
 
-.suggestion{
+.suggestion {
   border: 1px solid black;
   margin-top: 0;
   width: 100%;

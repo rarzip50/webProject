@@ -10,10 +10,11 @@ class MenuBar extends React.Component {
     this.state = {
       connectedUsers: null,
       user: this.props.user,
-      suggestions: [{text: "yes"}, {text: "yes"}],
-      displaySuggestions: "none"
+      suggestions: [],
+      displaySuggestions: "none",
     };
     this.listRef = React.createRef();
+    this.search = this.search.bind(this);
   }
 
   chooseUser = () => {
@@ -34,8 +35,25 @@ class MenuBar extends React.Component {
   };
 
   search(e) {
-    const searchText = e.currentTarget.value;
-    
+    let searchText = e.currentTarget.value;
+    if (searchText !== "") {
+      axios.get(globals.SERVER_URL + "/getAllUsers").then(
+        (res) => {
+          let results = [];
+          for (var aa of res.data) {
+            if (aa.name.includes(searchText)) {
+              results.push({ text: aa.name });
+            }
+          }
+          this.setState({ suggestions: results });
+        },
+        (rej) => {
+          this.setState({ suggetions: [] });
+        }
+      );
+    } else {
+      this.setState({ suggestions: [] });
+    }
   }
 
   setOptions = () => {};
@@ -54,24 +72,15 @@ class MenuBar extends React.Component {
             type="text"
             placeholder="Enter Username"
             name="search"
-            className= "searchBar"
+            className="searchBar"
             onChange={this.search}
-          >
-          </input>
-          <div className="suggestions">
-          {this.state.suggestions.map((suggestion) => {
-            return (
-              <div
-                className="suggestion"
-              >
-                {suggestion.text}
-              </div>
-            );
-          })}
-
-          </div>
+          ></input>
         </div>
-        
+        <div className="suggestions">
+          {this.state.suggestions.map((suggestion) => {
+            return <div className="suggestion">{suggestion.text}</div>;
+          })}
+        </div>
       </div>
     );
   }

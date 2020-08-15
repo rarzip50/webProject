@@ -33,7 +33,7 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/connectedUsers", (req, res) => {
-  res.send(utils.getConnectedUsers());
+  //res.send(utils.getConnectedUsers());
 });
 
 app.get("/postsForMe", (req, res) => {
@@ -48,4 +48,18 @@ app.post("/saveNewPost", (req, res) => {
 
 app.post("/editExposure", (req, res) => {
   utils.editPostExposure(req.body.data);
+});
+
+app.get("/getAllUsers", (req, res) => {
+  res.send([
+    {
+      name: "ofir",
+    },
+    {
+      name: "sapir",
+    },
+    {
+      name: "ofek",
+    },
+  ]);
 });
