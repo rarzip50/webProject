@@ -14,6 +14,8 @@ class Feed extends React.Component {
 
     this.state = {
       user: this.props.user,
+      email: this.props.email,
+      token: this.props.token,
       content: [],
     };
     this.listRef = React.createRef();
@@ -51,22 +53,31 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    const t = $.get(globals.SERVER_URL + "/postsForMe", {
-      user: this.state.user,
-    });
-    t.then((res) => {
-      if (res.length !== 0) {
-        this.setState({ content: res });
-        console.log(res);
-      } else {
-      }
-    });
+    axios
+      .get(globals.SERVER_URL + "/postsForMe", {
+        params: { email: this.state.email },
+      })
+      .then((res) => {});
+    // const t = $.get(globals.SERVER_URL + "/postsForMe", {
+    //   user: this.state.user,
+    // });
+    // t.then((res) => {
+    //   if (res.length !== 0) {
+    //     this.setState({ content: res });
+    //     console.log(res);
+    //   } else {
+    //   }
+    // });
   }
 
   render() {
     return (
       <>
-        <MenuBar user={this.state.user} />
+        <MenuBar
+          user={this.state.user}
+          email={this.state.email}
+          token={this.state.token}
+        />
         <div className="feed">
           <PostUpload userName={this.state.user} onUpload={this.postContent} />
           {this.state.content.map((postContent, index) => {

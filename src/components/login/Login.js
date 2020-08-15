@@ -20,22 +20,24 @@ class Login extends React.Component {
     let userName = document.getElementsByName("uname")[0].value;
     let password = document.getElementsByName("psw")[0].value;
     axios
-      .post(globals.SERVER_URL + "/login", {
-        userName: userName,
+      .post(globals.SERVER_URL + "/users/login", {
+        email: userName,
         password: password,
       })
       .then(
         (res) => {
-          if (res.data.result === globals.authorizationStatuses.AUTHORIZED) {
-            this.setState({
-              feed: <Feed user={userName} />,
-              showLogin: "none",
-            });
-          } else if (
-            res.data.result === globals.authorizationStatuses.UNAUTHORIZED
-          ) {
-            alert("user or password are not in the system");
-          }
+          console.log(res.data.token);
+          this.setState({
+            feed: (
+              <Feed
+                user={res.data.user.name}
+                token={res.data.token}
+                email={res.data.user.email}
+              />
+            ),
+            showLogin: "none",
+          });
+          document.cookie = `email=${res.data.user.email}`;
         },
         (reject) => {
           alert("could not log you in because\n" + reject);

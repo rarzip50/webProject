@@ -5,16 +5,18 @@ import globals from "../../globals";
 
 class MenuBar extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       connectedUsers: null,
       user: this.props.user,
+      email: this.props.email,
+      token: this.props.token,
       suggestions: [],
       displaySuggestions: "none",
     };
     this.listRef = React.createRef();
     this.search = this.search.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   chooseUser = () => {
@@ -34,11 +36,16 @@ class MenuBar extends React.Component {
     );
   };
 
+  logOut() {
+    console.log(this.state);
+  }
+
   search(e) {
     let searchText = e.currentTarget.value;
     if (searchText !== "") {
-      axios.get(globals.SERVER_URL + "/getAllUsers").then(
+      axios.get(globals.SERVER_URL + "/users/all").then(
         (res) => {
+          console.log(res.data);
           let results = [];
           for (var aa of res.data) {
             if (aa.name.includes(searchText)) {
@@ -76,6 +83,9 @@ class MenuBar extends React.Component {
             onChange={this.search}
           ></input>
         </div>
+        <button onClick={this.logOut} className="header">
+          logout
+        </button>
         <div className="suggestions">
           {this.state.suggestions.map((suggestion) => {
             return <div className="suggestion">{suggestion.text}</div>;
