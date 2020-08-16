@@ -27,6 +27,8 @@ class Login extends React.Component {
       .then(
         (res) => {
           console.log(res.data.token);
+          document.cookie = `email=${res.data.user.email}`;
+          document.cookie = `auth_token=${res.data.token}`;
           this.setState({
             feed: (
               <Feed
@@ -37,8 +39,6 @@ class Login extends React.Component {
             ),
             showLogin: "none",
           });
-          document.cookie = `email=${res.data.user.email}`;
-          document.cookie = `auth_token=${res.data.token}`;
         },
         (reject) => {
           alert("could not log you in because\n" + reject);

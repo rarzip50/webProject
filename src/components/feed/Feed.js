@@ -98,6 +98,7 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
+    console.log("mount !!");
     axios
       .get(globals.SERVER_URL + "/users/me/feed", {
         headers: {
@@ -108,7 +109,7 @@ class Feed extends React.Component {
         let results = [];
         for (let post of res.data) {
           results.push({
-            creator: post.creator,
+            creator: "roy",
             date: post.date,
             public: post.public,
             comments: post.comments,
