@@ -1,10 +1,12 @@
 const express = require("express");
 const auth = require("../middleware/auth");
 const Post = require("../models/post");
+const { post } = require("jquery");
+const User = require("../models/user");
 const router = new express.Router();
 
 // Create a post
-router.post("/posts", auth, async (req, res) => {
+router.post("/posts/savePost", auth, async (req, res) => {
   const post = new Post({
     ...req.body,
     creator: req.user._id,
@@ -31,9 +33,16 @@ router.get("/posts", async (req, res) => {
 
 router.get("/postsForMe", async (req, res) => {
   try {
+    const email = req.query.email;
+    const user = await User.searchUserByEmail(email);
     const posts = await Post.find({});
-
-    res.send(posts);
+    let relevantPosts = [];
+    for (post of posts) {
+      if (user.friends.includes(post.creator)) {
+        relevantPosts.push(post);
+      }
+    }
+    res.send(relevantPosts);
   } catch (e) {
     res.status(500).send();
   }

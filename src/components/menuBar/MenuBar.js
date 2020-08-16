@@ -2,6 +2,7 @@ import React from "react";
 import "./MenuBar.css";
 import axios from "axios";
 import globals from "../../globals";
+import { data } from "jquery";
 
 class MenuBar extends React.Component {
   constructor(props) {
@@ -37,7 +38,37 @@ class MenuBar extends React.Component {
   };
 
   logOut() {
-    console.log(this.state);
+    axios
+      .post(globals.SERVER_URL + "/users/logout", "", {
+        headers: {
+          Authorization: `Bearer ${this.getCookie("auth_token")}`,
+        },
+      })
+      .then((res) => {
+        this.delete_cookie("email");
+        this.delete_cookie("auth_token");
+        window.location.reload(true);
+      });
+  }
+
+  delete_cookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
 
   search(e) {
